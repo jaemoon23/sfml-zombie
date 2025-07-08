@@ -11,8 +11,9 @@ protected:
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
-	
+
 	sf::Sprite cursor;
+
 public:
 	SceneGame();
 	~SceneGame() override = default;
@@ -21,7 +22,8 @@ public:
 	void Enter() override;
 	void Exit() override;
 	void Update(float dt) override;
-	void Draw(sf::RenderWindow& window);
+	void Draw(sf::RenderWindow& window) override;
+
 	void SpawnZombies(int count);
 };
 

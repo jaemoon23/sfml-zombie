@@ -1,39 +1,45 @@
 #include "stdafx.h"
 #include "Zombie.h"
 #include "Player.h"
-Zombie::Zombie(const std::string& name) : GameObject(name)
+
+Zombie::Zombie(const std::string& name)
+	: GameObject(name)
 {
 }
+
 void Zombie::SetPosition(const sf::Vector2f& pos)
 {
-	position = pos;
+	GameObject::SetPosition(pos);
 	body.setPosition(pos);
 }
 
 void Zombie::SetRotation(float rot)
 {
-	rotation = rot;
+	GameObject::SetRotation(rot);
 	body.setRotation(rot);
 }
 
 void Zombie::SetScale(const sf::Vector2f& s)
 {
-	scale = s;
+	GameObject::SetScale(s);
 	body.setScale(s);
 }
 
 void Zombie::SetOrigin(const sf::Vector2f& o)
 {
-	origin = o;
-	originPreset = Origins::Custom;
+	GameObject::SetOrigin(o);
 	body.setOrigin(o);
 }
 
 void Zombie::SetOrigin(Origins preset)
 {
-	originPreset = preset;
-	Utils::SetOrigin(body, originPreset);
+	GameObject::SetOrigin(preset);
+	if (preset != Origins::Custom)
+	{
+		Utils::SetOrigin(body, preset);
+	}
 }
+
 void Zombie::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
@@ -50,12 +56,11 @@ void Zombie::Reset()
 {
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
 
-	body.setTexture(TEXTURE_MGR.Get(texId));
-
+	body.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
-	SetPosition({ 0.f,0.f });
+	SetPosition({ 0.f, 0.f });
 	SetRotation(0.f);
-	SetScale({ 1.f,1.f });
+	SetScale({ 1.f, 1.f });
 }
 
 void Zombie::Update(float dt)
@@ -66,11 +71,14 @@ void Zombie::Update(float dt)
 		SetRotation(Utils::Angle(direction));
 		SetPosition(GetPosition() + direction * speed * dt);
 	}
+
+	hitBox.UpdateTransform(body, GetLocalBounds());
 }
 
 void Zombie::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
+	hitBox.Draw(window);
 }
 
 void Zombie::SetType(Types type)
@@ -80,26 +88,25 @@ void Zombie::SetType(Types type)
 	{
 	case Types::Bloater:
 		texId = "graphics/bloater.png";
+		maxHp = 200;
+		speed = 50;
+		damage = 100.f;
+		attackInterval = 1.f;
+		break;
+	case Types::Chaser:
+		texId = "graphics/chaser.png";
 		maxHp = 100;
 		speed = 100.f;
 		damage = 100.f;
-		attackIntervale = 1.f;
-		break;
-	case Types::Chase:
-		texId = "graphics/chaser.png";
-		maxHp = 200;
-		speed = 50.f;
-		damage = 100.f;
-		attackIntervale = 1.f;
+		attackInterval = 1.f;
 		break;
 	case Types::Crawler:
 		texId = "graphics/crawler.png";
 		maxHp = 50;
-		speed = 200.f;
+		speed = 200;
 		damage = 100.f;
-		attackIntervale = 1.f;
-		break;
-	default:
+		attackInterval = 1.f;
 		break;
 	}
+
 }

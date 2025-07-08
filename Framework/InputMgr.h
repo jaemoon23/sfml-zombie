@@ -4,7 +4,6 @@ enum class Axis
 {
 	Horizontal,
 	Vertical,
-
 };
 
 struct AxisInfo

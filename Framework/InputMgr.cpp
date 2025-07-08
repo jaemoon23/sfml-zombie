@@ -18,7 +18,6 @@ void InputMgr::Init()
 	infoH.negatives.push_back(sf::Keyboard::A);
 	infoH.negatives.push_back(sf::Keyboard::Left);
 	axisInfoMap.insert({ Axis::Horizontal , infoH });
-
 	AxisInfo infoV;
 	infoV.axis = Axis::Vertical;
 	infoV.positives.push_back(sf::Keyboard::S);
@@ -26,8 +25,6 @@ void InputMgr::Init()
 	infoV.negatives.push_back(sf::Keyboard::W);
 	infoV.negatives.push_back(sf::Keyboard::Up);
 	axisInfoMap.insert({ Axis::Vertical , infoV });
-
-
 }
 
 void InputMgr::Clear() 

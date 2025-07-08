@@ -8,7 +8,7 @@ protected:
 
 	sf::Vector2f position;
 	float rotation = 0.f;
-	sf::Vector2f scale = { 1.0f,1.0f };
+	sf::Vector2f scale = { 1.f, 1.f };
 	sf::Vector2f origin;
 
 	Origins originPreset = Origins::TL;
@@ -43,6 +43,16 @@ public:
 		origin = o;
 	}
 	virtual void SetOrigin(Origins preset) { originPreset = preset; }
+
+	virtual sf::FloatRect GetLocalBounds() const
+	{
+		return { 0.f, 0.f, 0.f, 0.f };
+	}
+
+	virtual sf::FloatRect GetGlobalBounds() const
+	{
+		return { 0.f, 0.f, 0.f, 0.f };
+	}
 
 	virtual void Init() = 0;
 	virtual void Release() = 0;

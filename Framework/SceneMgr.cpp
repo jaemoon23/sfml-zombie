@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "SceneMgr.h"
-#include "SceneGame.h"
 #include "SceneDev1.h"
 #include "SceneDev2.h"
+#include "SceneGame.h"
 
 void SceneMgr::Init()
 {

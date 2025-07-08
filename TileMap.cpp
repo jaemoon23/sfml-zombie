@@ -1,13 +1,10 @@
 #include "stdafx.h"
 #include "TileMap.h"
-#include "Zombie.h"
 
 TileMap::TileMap(const std::string& name)
 	: GameObject(name)
 {
 }
-
-
 
 void TileMap::Set(const sf::Vector2i& count, const sf::Vector2f& size)
 {
@@ -34,9 +31,9 @@ void TileMap::Set(const sf::Vector2i& count, const sf::Vector2f& size)
 		{ 0.f, 50.f },
 	};
 
-	for (int i = 0; i < count.y; i++)
+	for (int i = 0; i < count.y; ++i)
 	{
-		for (int j = 0; j < count.x; j++)
+		for (int j = 0; j < count.x; ++j)
 		{
 			int texIndex = Utils::RandomRange(0, 3);
 			if (i == 0 || i == count.y - 1 || j == 0 || j == count.x - 1)
@@ -47,7 +44,7 @@ void TileMap::Set(const sf::Vector2i& count, const sf::Vector2f& size)
 			int quadIndex = i * count.x + j;
 			sf::Vector2f quadPos(j * size.x, i * size.y);
 
-			for (int k = 0; k < 4; k++)
+			for (int k = 0; k < 4; ++k)
 			{
 				int vertexIndex = quadIndex * 4 + k;
 				va[vertexIndex].position = quadPos + posOffset[k];
@@ -66,8 +63,6 @@ void TileMap::UpdateTransform()
 	transform.scale(scale);
 	transform.translate(-origin);
 }
-
-
 
 void TileMap::SetPosition(const sf::Vector2f& pos)
 {
@@ -113,7 +108,7 @@ void TileMap::Init()
 	sortingLayer = SortingLayers::Background;
 	sortingOrder = 0;
 
-	Set({ 50, 50 }, { 50.f, 50.f });
+	Set({ 50, 50 }, {50.f, 50.f});
 }
 
 void TileMap::Release()
@@ -125,8 +120,8 @@ void TileMap::Reset()
 	texture = &TEXTURE_MGR.Get(spriteSheetId);
 
 	SetOrigin(Origins::MC);
-	SetScale({ 1.f,1.f });
-	SetPosition({ 0.f,0.f });
+	SetScale({ 1.f, 1.f });
+	SetPosition({ 0.f, 0.f });
 }
 
 void TileMap::Update(float dt)
